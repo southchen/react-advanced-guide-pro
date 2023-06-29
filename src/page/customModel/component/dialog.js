@@ -9,10 +9,12 @@ const controlShow = (f1, f2, value, timer) => {
     f2(value);
   }, timer);
 };
+
 const RenderChildren = (props) => {
   /* 把元素渲染到组件之外的 document.body 上  */
   return ReactDOM.createPortal(props.children, document.body);
 };
+
 export default function Dialog(props) {
   const { width, visible, closeCb, onClose, children } = props;
   /* 控制 modelShow 动画效果 */
@@ -42,11 +44,13 @@ export default function Dialog(props) {
           style={{ opacity: modelShowAync ? 1 : 0 }}
         >
           <div className="model_wrap">
-            <div style={{ width: width + "px" }}>{children}</div>
+            <div style={{ width: width + "px" }}>
+              {children}
+            </div>
           </div>
         </div>
         <div
-          className="model_container mast"
+          className="model_container mask"
           onClick={() => onClose && onClose()}
           style={{ opacity: modelShowAync ? 0.6 : 0 }}
         />

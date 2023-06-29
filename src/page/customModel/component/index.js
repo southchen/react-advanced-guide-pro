@@ -63,6 +63,7 @@ class Modal extends React.PureComponent {
         visible={visible}
         width={width}
       >
+
         {this.renderTop()}
         {this.renderContent()}
         {this.renderFooter()}
@@ -72,16 +73,21 @@ class Modal extends React.PureComponent {
 }
 
 let ModalContainer = null;
-const modelSysbol = Symbol("$$__model__Container_hidden");
+const modelSymbol = Symbol("$$__model__Container_hidden");
 
 /* 静态属性 */
 Modal.show = function (config) {
+console.log(ModalContainer?.[modelSymbol])
   /* 如果modal已经存在了，那么就不需要第二次show */
-  if (ModalContainer) return;
+  if (ModalContainer) {
+  ModalContainer?.[modelSymbol].setShow(true)
+return 
+};
   const props = { ...config, visible: true };
   const container = (ModalContainer = document.createElement("div"));
+// console.log(container)
   /* 创建一个管理者，管理model状态 */
-  const manager = (container[modelSysbol] = {
+  const manager = (container[modelSymbol] = {
     setShow: null,
     mounted: false,
     hidden() {
@@ -97,6 +103,7 @@ Modal.show = function (config) {
       ModalContainer = null;
     },
   });
+
   const ModelApp = (props) => {
     const [show, setShow] = useState(false);
     manager.setShow = setShow;
@@ -106,14 +113,24 @@ Modal.show = function (config) {
       manager.mounted = true;
       setShow(visible);
     }, []);
+
     return (
       <Modal
         {...trueProps}
-        closeCb={() => manager.mounted && manager.destory()}
+        closeCb={() => {
+          if(config?.closeCb && typeof config.closeCb === 'function') {
+ console.log(manager)
+            config.closeCb()
+            return
+          }
+          console.log(manager)
+          // manager.mounted && manager.destory()
+        }}
         visible={show}
       />
     );
   };
+
   /* 插入到body中 */
   document.body.appendChild(container);
   /* 渲染React元素 */
@@ -124,8 +141,10 @@ Modal.show = function (config) {
 /* 静态属性 */
 Modal.hidden = function () {
   if (!ModalContainer) return;
+console.log(ModalContainer)
+console.log(ModalContainer[modelSymbol])
   /* 如果存在 ModalContainer 那么隐藏 ModalContainer  */
-  ModalContainer[modelSysbol] && ModalContainer[modelSysbol].hidden();
+  ModalContainer[modelSymbol] && ModalContainer[modelSymbol].hidden();
 };
 
 export default Modal;
