@@ -47,8 +47,8 @@
   margin-bottom: 30px;
 }
 
-$bg-linear-gradien-red-light: linear-gradient(135deg, #fc4838 0%, #f6346b 100%);
-$bg-linear-gradien-red-dark: linear-gradient(135deg, #fc4838 0%, #f6346b 100%);
+@bg-linear-gradien-red-light: linear-gradient(135deg, #fc4838 0%, #f6346b 100%);
+@bg-linear-gradien-red-dark: linear-gradient(135deg, #fc4838 0%, #f6346b 100%);
 
 .constrol {
   padding: 30px;
@@ -70,7 +70,7 @@ $bg-linear-gradien-red-dark: linear-gradient(135deg, #fc4838 0%, #f6346b 100%);
   margin-left: 20px !important;
 }
 .searchbtn:focus {
-  background: $bg-linear-gradien-red-dark;
+  background: @bg-linear-gradien-red-dark;
   color: #fff;
   min-width: 96px;
   height: 36px;
@@ -83,7 +83,7 @@ $bg-linear-gradien-red-dark: linear-gradient(135deg, #fc4838 0%, #f6346b 100%);
   box-shadow: 0 2px 7px 0 #faa79b;
 }
 .searchbtn:hover {
-  background: $bg-linear-gradien-red-light;
+  // background: $bg-linear-gradien-red-light;
   color: #fff;
   min-width: 96px;
   height: 36px;
